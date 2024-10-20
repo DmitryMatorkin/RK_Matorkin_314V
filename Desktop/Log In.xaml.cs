@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,7 +73,31 @@ namespace Desktop
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string email = EmailTextBox.Text;
+            string password = TextBoxWithPlaceholder.Text;
 
+
+            // Проверяем поля с помощью класса InputValidator
+            if (!email.IsValidEmail())
+            {
+                MessageBox.Show("Неверный формат почты!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+
+            if (!password.IsValidPassword())
+            {
+                MessageBox.Show("Пароль должен содержать не менее 6 символов!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+
+
+            MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            Maim_empty main_Empty = new Maim_empty();
+            WindowManager.SwitchWindow(this, main_Empty);
         }
         public static class WindowManager
         {

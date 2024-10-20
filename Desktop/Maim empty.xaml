@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
         mc:Ignorable="d"
-        Title="Maim_empty" Height="450" Width="800">
-    <Grid>
-        
+         Title="Main_empty" Height="600" Width="800" MinHeight="600" MinWidth="800">
+
+    <Grid Height="600" Width="800" Background="White">
+        <Label Content="Добро пожаловать!" HorizontalAlignment="Left" VerticalAlignment="Top" Width="346" Height="66" FontSize="36" Margin="239,134,0,0"/>
+        <Label Content="Создайте свою первую&#xD;&#xA; задачу" HorizontalAlignment="Left" VerticalAlignment="Center" Width="400" Height="125" FontSize="36" Margin="239,0,0,0"/>
+
+        <Image Height="94" Margin="27,40,653,0" VerticalAlignment="Top" Source="/images/profil.png"/>
+        <Button Margin="323,427,177,117" Background="#FFF96060" BorderBrush="#FFF96060" Foreground="White" Content="Создать первую задачу" Width="300" Height="40"  FontSize="16" Click="Button_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5, 5, 5, 5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static Desktop.Log_In;
 
 namespace Desktop
 {
@@ -120,7 +122,61 @@ namespace Desktop
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // Получаем значения из TextBox
+            string name = NameUser.Text.Trim();
+            string email = EmailUser.Text.Trim();
+            string password = ParolUser.Text.Trim();
+            string password2 = Parol2User.Text.Trim();
 
+            // Список для хранения сообщений об ошибках
+            List<string> errors = new List<string>();
+
+            // Проверяем поля на пустоту
+            if (name.IsNullOrEmpty())
+            {
+                errors.Add("Имя не должно быть пустым!");
+            }
+            if (email.IsNullOrEmpty())
+            {
+                errors.Add("Email не должен быть пустым!");
+            }
+            if (password.IsNullOrEmpty())
+            {
+                errors.Add("Пароль не должен быть пустым!");
+            }
+            if (password2.IsNullOrEmpty())
+            {
+                errors.Add("Повторите пароль!");
+            }
+
+            // Проверяем поля с помощью класса InputValidator
+            if (!name.IsValidName())
+            {
+                errors.Add("Имя должно содержать не менее 3 символов!");
+            }
+            if (!email.IsValidEmail())
+            {
+                errors.Add("Неверный формат почты!");
+            }
+            if (!password.IsValidPassword())
+            {
+                errors.Add("Пароль должен содержать не менее 6 символов!");
+            }
+            
+            Validate.ValidatePasswords(password, password2, errors);
+            // Если есть ошибки, выводим их
+            if (errors.Count > 0)
+            {
+                string errorMessage = string.Join("\n", errors);
+                MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            MessageBox.Show("Регистрация успешна!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            Maim_empty main_Empty = new Maim_empty();
+            WindowManager.SwitchWindow(this, main_Empty);
         }
+
+
     }
 }
