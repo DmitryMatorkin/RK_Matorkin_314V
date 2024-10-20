@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
         mc:Ignorable="d"
-        Title="Log_In" Height="450" Width="800">
-    <Grid>
-        
+        Title="Log_In" Height="600" Width="800" MinHeight="600" MinWidth="800" >
+    <Grid Height="600" Margin="0,0,0,0" Width="800">
+        <Label Content="Добро пожаловать!" HorizontalAlignment="Left" VerticalAlignment="Top" Width="330" Height="65" FontSize="36" Margin="431,73,0,0"/>
+        <Image Height="150" Margin="54,73,590,0" VerticalAlignment="Top" Source="/images/logo.png"/>
+        <Button Margin="431,508,69,52" Background="#FFF96060" BorderBrush="#FFF96060" Foreground="White" Content="Регистрация" Width="300" Height="40"  FontSize="16" Click="Button_Click_1">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5, 5, 15, 15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Margin="431,463,69,97" Background="#FFF96060" BorderBrush="#FFF96060" Foreground="White" Content="Войти" Width="300" Height="40"  FontSize="16" Click="Button_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="15, 15, 5, 5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Label Content="Почта" Width="71" FontSize="22" Margin="431,255,298,307"/>
+        <Label Content="Пароль" VerticalAlignment="Top" Width="89" Height="42" FontSize="22" Margin="431,332,280,0"/>
+        <Label Content="Восстановить доступ" VerticalAlignment="Top" Height="37" FontSize="20" Margin="531,421,69,0"/>
+
+        <TextBox Name="EmailTextBox"
+            Text="Введите почту"
+            TextWrapping="Wrap"
+            BorderThickness="0,0,0,1"
+            Opacity="1"
+            FontSize="14"
+            Foreground="Gray"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="200"
+            GotFocus="EmailTextBox_GotFocus"
+            LostFocus="EmailTextBox_LostFocus"
+            Margin="431,293,0,0"/>
+
+
+        <TextBox Name="TextBoxWithPlaceholder"
+        Text="Введите пароль"
+         TextWrapping="Wrap"
+           BorderThickness="0,0,0,1"
+           Opacity="1"
+          FontSize="14"
+        Foreground="Gray"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Left"
+        Width="200"
+        GotFocus="TextBoxWithPlaceholder_GotFocus"
+        LostFocus="TextBoxWithPlaceholder_LostFocus" Margin="431,374,0,0"/>
     </Grid>
 </Window>
