@@ -28,7 +28,7 @@
         <Label Content="Пароль" VerticalAlignment="Top" Width="89" Height="42" FontSize="22" Margin="431,332,280,0"/>
         <Label Content="Восстановить доступ" VerticalAlignment="Top" Height="37" FontSize="20" Margin="531,421,69,0"/>
 
-        <TextBox Name="EmailTextBox"
+        <TextBox x:Name="EmailTextBox"
             Text="Введите почту"
             TextWrapping="Wrap"
             BorderThickness="0,0,0,1"

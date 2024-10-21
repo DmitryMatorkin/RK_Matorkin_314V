@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Desktop
 {
@@ -70,35 +71,52 @@ namespace Desktop
                 TextBoxWithPlaceholder.Foreground = Brushes.Gray;
             }
         }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Reg reg = new Reg();
+            WindowManager.SwitchWindow(this, reg);
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string email = EmailTextBox.Text;
-            string password = TextBoxWithPlaceholder.Text;
+            string email = EmailTextBox.Text.Trim();
+            string password = TextBoxWithPlaceholder.Text.Trim();
 
 
-            // Проверяем поля с помощью класса InputValidator
-            if (!email.IsValidEmail())
+            //bool isEmpty = Validate.IsNullOrEmpty(EmailTextBox.Text);
+            //MessageBox.Show(isEmpty ? "Введите почту" : "Введите почту");
+
+            // Проверяем email и пароль с использованием методов расширения
+            bool isEmailValid = email.IsValidEmail();
+            bool isPasswordValid = password.IsValidPassword();
+
+            // Дополнительная проверка на специальный email и стандартный текст для пароля
+            if (isEmailValid && isPasswordValid && email != "exam@yandex.ru" && password != "Введите пароль")
             {
-                MessageBox.Show("Неверный формат почты!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                Maim_empty main_Empty = new Maim_empty();
+                WindowManager.SwitchWindow(this, main_Empty);
+            }
+            else
+            {
+                // Иначе выводим сообщение об ошибке
+                string errorMessage = "Введите корректные данные!";
+
+                if (!isEmailValid)
+                    errorMessage += "\n";
+
+                if (!isPasswordValid)
+                    errorMessage += "\n";
+                
+
+                // Выводим сообщение с ошибками
+                MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 
-
-            if (!password.IsValidPassword())
-            {
-                MessageBox.Show("Пароль должен содержать не менее 6 символов!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-
-
-
-            MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-            Maim_empty main_Empty = new Maim_empty();
-            WindowManager.SwitchWindow(this, main_Empty);
+          
         }
+    }
         public static class WindowManager
         {
 
@@ -108,10 +126,5 @@ namespace Desktop
                 currentWindow.Hide();
             }
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Reg reg = new Reg();
-            WindowManager.SwitchWindow(this, reg);
-        }
-    }
+
 }

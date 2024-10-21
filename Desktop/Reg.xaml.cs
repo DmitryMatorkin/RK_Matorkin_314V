@@ -1,6 +1,7 @@
 ﻿using Desktop.validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static Desktop.Log_In;
 
+
 namespace Desktop
 {
     /// <summary>
@@ -21,9 +23,11 @@ namespace Desktop
     /// </summary>
     public partial class Reg : Window
     {
+        
         public Reg()
         {
             InitializeComponent();
+           
         }
         private void NameUser_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -122,59 +126,79 @@ namespace Desktop
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // Получаем значения из TextBox
-            string name = NameUser.Text.Trim();
-            string email = EmailUser.Text.Trim();
-            string password = ParolUser.Text.Trim();
-            string password2 = Parol2User.Text.Trim();
 
-            // Список для хранения сообщений об ошибках
-            List<string> errors = new List<string>();
+            string name = NameUser.Text;
+            string email = EmailUser.Text;
+            string password = ParolUser.Text;
+            string password2 = Parol2User.Text;
 
-            // Проверяем поля на пустоту
-            if (name.IsNullOrEmpty())
-            {
-                errors.Add("Имя не должно быть пустым!");
-            }
-            if (email.IsNullOrEmpty())
-            {
-                errors.Add("Email не должен быть пустым!");
-            }
-            if (password.IsNullOrEmpty())
-            {
-                errors.Add("Пароль не должен быть пустым!");
-            }
-            if (password2.IsNullOrEmpty())
-            {
-                errors.Add("Повторите пароль!");
-            }
+            bool isEmailValid = email.IsValidEmail();
+            bool isPasswordValid = password.IsValidPassword();
+            bool isNameValid = name.IsValidName();
 
-            // Проверяем поля с помощью класса InputValidator
-            if (!name.IsValidName())
+           
+
+
+
+            if (isEmailValid && isPasswordValid && isNameValid && email != "exam@yandex.ru" && password != "Введите пароль" && name != "Введите имя пользователя")
             {
-                errors.Add("Имя должно содержать не менее 3 символов!");
+                            
             }
-            if (!email.IsValidEmail())
+            else
             {
-                errors.Add("Неверный формат почты!");
-            }
-            if (!password.IsValidPassword())
-            {
-                errors.Add("Пароль должен содержать не менее 6 символов!");
-            }
-            
-            Validate.ValidatePasswords(password, password2, errors);
-            // Если есть ошибки, выводим их
-            if (errors.Count > 0)
-            {
-                string errorMessage = string.Join("\n", errors);
+                // Иначе выводим сообщение об ошибке
+                string errorMessage = "Ошибка валидации:";
+                if (!isEmailValid)
+                    errorMessage += "\nНеверный email.";
+                if (!isPasswordValid)
+                    errorMessage += "\nПароль должен содержать не менее 6 символов.";
+                if (!isNameValid)
+                    errorMessage += "\nИмя должно содержать не менее 3 знаков.";
+                
+
+                if (password == password2)
+                {
+                    MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Maim_empty main_Empty = new Maim_empty();
+                    WindowManager.SwitchWindow(this, main_Empty);
+                }
+                else
+                {
+                    MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+          
+
                 MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
             }
 
-            MessageBox.Show("Регистрация успешна!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-            Maim_empty main_Empty = new Maim_empty();
-            WindowManager.SwitchWindow(this, main_Empty);
+
+            //// Проверяем поля с помощью класса InputValidator
+            //if (!name.IsValidName())
+            //{
+            //    MessageBox.Show("Введите корректное имя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+            //if (!email.IsValidEmail())
+            //{
+            //    MessageBox.Show("Неверный формат почты!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+
+            //if (!password.IsValidPassword())
+            //{
+            //    MessageBox.Show("Пароль должен содержать не менее 6 символов!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+
+
+            //if (password != password2)
+            //{
+            //    MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+
+
+
         }
 
 
