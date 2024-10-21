@@ -99,12 +99,12 @@ namespace Desktop
                 {
                     errorMessage += "\nВведите корректный email.";
                 }
-            if (password == "Введите пароль")
-            {
-                errorMessage += "\nВведите пароль.";
-            }
-            if (!isPasswordValid)
+                if (password == "Введите пароль")
                 {
+                    errorMessage += "\nВведите пароль.";
+                }
+                if (!isPasswordValid)
+                    {
                     errorMessage += "\nПароль должен содержать не менее 6 символов.";
                 }
 
