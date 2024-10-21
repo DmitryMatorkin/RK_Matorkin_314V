@@ -79,43 +79,52 @@ namespace Desktop
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string email = EmailTextBox.Text.Trim();
-            string password = TextBoxWithPlaceholder.Text.Trim();
+          
+                string email = EmailTextBox.Text.Trim();
+                string password = TextBoxWithPlaceholder.Text.Trim();
 
+                // Проверяем email и пароль с использованием методов расширения
+                bool isEmailValid = email.IsValidEmail();
+                bool isPasswordValid = password.IsValidPassword();
 
-            //bool isEmpty = Validate.IsNullOrEmpty(EmailTextBox.Text);
-            //MessageBox.Show(isEmpty ? "Введите почту" : "Введите почту");
+                // Дополнительная проверка на специальный email и стандартный текст для пароля
+                string errorMessage = "Ошибка валидации:";
 
-            // Проверяем email и пароль с использованием методов расширения
-            bool isEmailValid = email.IsValidEmail();
-            bool isPasswordValid = password.IsValidPassword();
-
-            // Дополнительная проверка на специальный email и стандартный текст для пароля
-            if (isEmailValid && isPasswordValid && email != "exam@yandex.ru" && password != "Введите пароль")
-            {
-                MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                Maim_empty main_Empty = new Maim_empty();
-                WindowManager.SwitchWindow(this, main_Empty);
-            }
-            else
-            {
-                // Иначе выводим сообщение об ошибке
-                string errorMessage = "Введите корректные данные!";
+                if (email == "exam@yandex.ru")
+                {
+                    errorMessage += "\nНедопустимый email.";
+                }
 
                 if (!isEmailValid)
-                    errorMessage += "\n";
+                {
+                    errorMessage += "\nВведите корректный email.";
+                }
+            if (password == "Введите пароль")
+            {
+                errorMessage += "\nВведите пароль.";
+            }
+            if (!isPasswordValid)
+                {
+                    errorMessage += "\nПароль должен содержать не менее 6 символов.";
+                }
 
-                if (!isPasswordValid)
-                    errorMessage += "\n";
-                
-
-                // Выводим сообщение с ошибками
-                MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (isEmailValid && isPasswordValid && email != "exam@yandex.ru" && password != "Введите пароль")
+                {
+                    MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Maim_empty main_Empty = new Maim_empty();
+                    WindowManager.SwitchWindow(this, main_Empty);
+                }
+                else
+                {
+                    // Выводим сообщение с ошибками, если есть ошибки
+                    MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
 
-          
-        }
+
+
+        
     }
         public static class WindowManager
         {
